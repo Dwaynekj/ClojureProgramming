@@ -89,7 +89,21 @@
 (defn cell-block 
   "Creates a sequences of 3x3 windows from a triple of 3 sequences."
   [[left mid right]]
-  (window (map vector left mid right))) 
+  (window (map vector left mid right)))
+
+;;(defn debug
+;;  [rows-triple]
+;;  (let [[left mid right] rows-triple]
+;;    (map vector left mid right)))
+
+;; This produces a frame with a padded lazy collection around each row of the board 
+(window (repeat nil) glider)
+;; This produces a full frame with padding around each element of the center row, i.e 4, 5 and 6 akin to a cell-block call
+(window  (map vector '(1 2 3) '(4 5 6) '(7 8 9)))
+;; This produces a similar for 1, 2 and 3
+(window  (map vector '(nil nil nil) '(1 2 3) '(4 5 6)))
+;; Building from above, Step Row takes a triples of rows from the collection in the first level window call, creates a collection of cell-block from each element in the center row and computes the liveliness of each of them
+;; Step-Row is called for each row as they will be submitted as the center row, padded or not
 
 (defn liveness
   "Returns the liveness (nil or :on) of the center cell for
@@ -112,6 +126,9 @@
   [board]
   (vec (map step-row (window (repeat nil) board))))
 
+;; (mapcat neighbours #{[2 0] [2 1] [2 2] [1 2] [0 1]}))
+;; If I'm someone's neighbor then they are my neighbor
+;; If I appear as a neighbor based on the rules, then I'm a living cell
 (defn step 
  "Yields the next state of the world"
  [cells]

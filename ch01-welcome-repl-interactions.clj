@@ -7,16 +7,16 @@
 ;-----
 (defn average                             
   [numbers]                               
-  (/ (apply + numbers) (count numbers)))  
+  (/ (apply + numbers) [count numbers]))  
 ;= #'user/average
-(average [60 80 100 400])                 
+(average [60 80 100 400])
 ;= 160
 
 
 ;-----
 (println (average [60 80 100 400]))
 ; 160
-;= nil                              
+;= nil
 
 
 ;-----
